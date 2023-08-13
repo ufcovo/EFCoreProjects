@@ -20,8 +20,8 @@ namespace EFCoreProjects.DatabaseFirst.DAL
                 AddJsonFile("appSettings.json", optional: true, reloadOnChange: true);
 
             Configuration = builder.Build();
-            optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("SqlCon"));
+            //optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            //optionsBuilder.UseSqlServer(Configuration.GetConnectionString("SqlCon"));
         }
     }
 }

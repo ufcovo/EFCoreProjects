@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 DbContextInitializer.Build();
 
-using (var _context = new AppDbContext(DbContextInitializer.optionsBuilder.Options))
+using (var _context = new AppDbContext())
 {
     var products = await _context.Products.ToListAsync();
 
