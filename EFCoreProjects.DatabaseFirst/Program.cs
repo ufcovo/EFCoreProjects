@@ -9,6 +9,6 @@ using (var _context = new AppDbContext())
 
     products.ForEach(p =>
     {
-        Console.WriteLine($"{p.ID} : {p.NAME} : {p.PRICE}");
+        Console.WriteLine($"{p.ID} : {p.NAME} : {p.PRICE} : {p.STOCK}");
     });
 }
