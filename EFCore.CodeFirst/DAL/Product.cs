@@ -16,6 +16,7 @@ namespace EFCore.CodeFirst.DAL
         public int Barcode { get; set; }
         public int Category_Id { get; set; }
         // Navigation Property
+        [ForeignKey("Category_Id")]
         public Category Category { get; set; }
     }
 }
