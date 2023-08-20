@@ -20,23 +20,7 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Product>().ToTable("ProductTBB", "productstbb");
             base.OnModelCreating(modelBuilder);
         }
-        //public override int SaveChanges()
-        //{
-        //    ChangeTracker.Entries().ToList().ForEach(e =>
-        //    {
-        //        if (e.Entity is Product product)
-        //        {
-        //            if (e.State == EntityState.Added)
-        //            {
-        //                product.CreatedDate = DateTime.Now;
-        //            }
-        //        }
-        //    });
-
-        //    return base.SaveChanges();
-        //}
     }
 }
