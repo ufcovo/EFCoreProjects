@@ -14,9 +14,6 @@ namespace EFCore.CodeFirst.DAL
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public int Barcode { get; set; }
-        public int Category_Id { get; set; }
-        // Navigation Property
-        [ForeignKey("Category_Id")]
-        public Category Category { get; set; }
+        public ProductFeature ProductFeature { get; set; }
     }
 }
