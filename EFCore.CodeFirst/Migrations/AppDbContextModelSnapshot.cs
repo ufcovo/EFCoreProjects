@@ -130,19 +130,19 @@ namespace EFCore.CodeFirst.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("StudentTeacherManyToMany", b =>
                 {
-                    b.Property<int>("StudentsId")
+                    b.Property<int>("Student_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeachersId")
+                    b.Property<int>("Teacher_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentsId", "TeachersId");
+                    b.HasKey("Student_Id", "Teacher_Id");
 
-                    b.HasIndex("TeachersId");
+                    b.HasIndex("Teacher_Id");
 
-                    b.ToTable("StudentTeacher");
+                    b.ToTable("StudentTeacherManyToMany");
                 });
 
             modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature", b =>
@@ -156,19 +156,21 @@ namespace EFCore.CodeFirst.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("StudentTeacherManyToMany", b =>
                 {
                     b.HasOne("EFCore.CodeFirst.DAL.Student", null)
                         .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("Student_Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_StudentID");
 
                     b.HasOne("EFCore.CodeFirst.DAL.Teacher", null)
                         .WithMany()
-                        .HasForeignKey("TeachersId")
+                        .HasForeignKey("Teacher_Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_TeacherId");
                 });
 
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Product", b =>
