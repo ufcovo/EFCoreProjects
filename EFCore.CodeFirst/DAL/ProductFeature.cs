@@ -12,7 +12,7 @@ namespace EFCore.CodeFirst.DAL
         public int Width { get; set; }
         public int Height { get; set; }
         public string Color { get; set; }
-        public int ProductRef_Id { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
     }
 }
