@@ -46,23 +46,23 @@ namespace EFCore.CodeFirst.Migrations
                     Width = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    ProductRef_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductFeature", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductFeature_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_ProductFeature_Products_ProductRef_Id",
+                        column: x => x.ProductRef_Id,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductFeature_ProductId",
+                name: "IX_ProductFeature_ProductRef_Id",
                 table: "ProductFeature",
-                column: "ProductId",
+                column: "ProductRef_Id",
                 unique: true);
         }
 

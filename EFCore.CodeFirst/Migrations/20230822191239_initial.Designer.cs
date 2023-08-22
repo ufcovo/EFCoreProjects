@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230822190510_initial")]
+    [Migration("20230822191239_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,7 +81,7 @@ namespace EFCore.CodeFirst.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductRef_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Width")
@@ -89,7 +89,7 @@ namespace EFCore.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId")
+                    b.HasIndex("ProductRef_Id")
                         .IsUnique();
 
                     b.ToTable("ProductFeature");
@@ -99,7 +99,7 @@ namespace EFCore.CodeFirst.Migrations
                 {
                     b.HasOne("EFCore.CodeFirst.DAL.Product", "Product")
                         .WithOne("ProductFeature")
-                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature", "ProductId")
+                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature", "ProductRef_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -22,6 +22,9 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.Category_Id);
+
+            modelBuilder.Entity<Product>().HasOne(x => x.ProductFeature).WithOne(x => x.Product).HasForeignKey<ProductFeature>(X => X.ProductRef_Id);
             base.OnModelCreating(modelBuilder);
         }
     }
