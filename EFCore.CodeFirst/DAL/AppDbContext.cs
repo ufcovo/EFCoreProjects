@@ -12,8 +12,8 @@ namespace EFCore.CodeFirst.DAL
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Student> Students { get; set; }
+        //public DbSet<Teacher> Teachers { get; set; }
+        //public DbSet<Student> Students { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,16 +31,18 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().HasOne(x => x.ProductFeature).WithOne(x => x.Product).HasForeignKey<ProductFeature>(X => X.ProductRef_Id);
 
             // many to many
-            modelBuilder.Entity<Student>()
-                .HasMany(x => x.Teachers)
-                .WithMany(x => x.Students)
-                .UsingEntity<Dictionary<string, object>>(
-                    "StudentTeacherManyToMany",
-                    x => x.HasOne<Teacher>().WithMany().HasForeignKey("Teacher_Id")
-                    .HasConstraintName("FK_TeacherId"),
-                    x => x.HasOne<Student>().WithMany().HasForeignKey("Student_Id")
-                    .HasConstraintName("FK_StudentID")
-                );
+            //modelBuilder.Entity<Student>()
+            //    .HasMany(x => x.Teachers)
+            //    .WithMany(x => x.Students)
+            //    .UsingEntity<Dictionary<string, object>>(
+            //        "StudentTeacherManyToMany",
+            //        x => x.HasOne<Teacher>().WithMany().HasForeignKey("Teacher_Id")
+            //        .HasConstraintName("FK_TeacherId"),
+            //        x => x.HasOne<Student>().WithMany().HasForeignKey("Student_Id")
+            //        .HasConstraintName("FK_StudentID")
+            //    );
+
+
 
 
             
