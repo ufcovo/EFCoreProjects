@@ -6,8 +6,8 @@ Initializer.Build();
 
 using (var _context = new AppDbContext())
 {
-    //_context.Person.Add(new Manager() { FirstName = "m1", LastName = "m1", Age = 22, Grade = 1 });
-    //_context.Person.Add(new Employee() { FirstName = "e1", LastName = "e1", Age = 22, Salary = 10 });
+    //_context.Manager.Add(new Manager() { FirstName = "m1", LastName = "m1", Age = 22, Grade = 1 });
+    //_context.Employee.Add(new Employee() { FirstName = "e1", LastName = "e1", Age = 22, Salary = 10 });
     //_context.SaveChanges();
 
     var manager = _context.Manager.ToList();

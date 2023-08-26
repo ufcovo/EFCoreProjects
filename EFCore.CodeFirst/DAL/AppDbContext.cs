@@ -54,7 +54,11 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedNever(); // none
 
             //modelBuilder.Entity<Product>().Property(x => x.Price).HasPrecision(18, 2);
-            
+
+            // TPT
+            modelBuilder.Entity<BasePerson>().ToTable("Persons");
+            modelBuilder.Entity<Employee>().ToTable("Emplooyes");
+            modelBuilder.Entity<Manager>().ToTable("Managers");
             base.OnModelCreating(modelBuilder);
         }
     }
