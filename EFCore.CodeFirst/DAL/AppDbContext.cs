@@ -11,9 +11,9 @@ namespace EFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Student> Students { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        //public DbSet<Teacher> Teachers { get; set; }
+        //public DbSet<Student> Students { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,11 +42,13 @@ namespace EFCore.CodeFirst.DAL
             //        .HasConstraintName("FK_StudentID")
             //    ); 
 
-            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(
-                x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.SetNull);
+            //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(
+            //    x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.SetNull);
 
-
-            
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAdd(); // identity
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAddOrUpdate(); // computed
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedNever(); // none
             base.OnModelCreating(modelBuilder);
         }
     }
