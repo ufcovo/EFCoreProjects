@@ -6,10 +6,13 @@ Initializer.Build();
 
 using (var _context = new AppDbContext())
 {
-    var category = _context.Categories.First(x => x.Name == "Books");
-    var product = new Product() { Name = "Book 1", Price = 100, Stock = 100, Barcode = 123, CategoryId = category.Id };
+    // Product = Parent, ProductFeature = Child
+    var category = _context.Categories.First(x => x.Name == "Eraser");
+    var product = new Product { Name = "Eraser", Price = 200, Stock = 200, Barcode = 213, Category = category, ProductFeature = new() {
+    Color = "Red", Height = 100, Width = 200} };
 
-    _context.Add(category);
+    _context.Products.Add(product);
     _context.SaveChanges();
+    
     Console.WriteLine("Saved");
 }
