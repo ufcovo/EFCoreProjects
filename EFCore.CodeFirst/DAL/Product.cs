@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EFCore.CodeFirst.DAL
 {
     public class Product
-    {
+    { 
         public int Id { get; set; }
         public string Name { get; set; }
         [Precision(18, 2)]
@@ -18,7 +18,7 @@ namespace EFCore.CodeFirst.DAL
         public int Barcode { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-        public ProductFeature ProductFeature { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ProductFeature ProductFeature { get; set; }
     }
 }

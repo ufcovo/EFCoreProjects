@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace EFCore.CodeFirst.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build();
-            optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).UseLazyLoadingProxies().UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
