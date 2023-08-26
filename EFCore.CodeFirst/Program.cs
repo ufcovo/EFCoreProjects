@@ -10,17 +10,18 @@ using (var _context = new AppDbContext())
     //student.Teachers.Add(new() { Name = "Teacher of Halim"});
     //student.Teachers.Add(new() { Name = "Teacher of Ahmet" });
 
-    var teacher = new Teacher()
-    {
-        Name = "Teacher of Mert",
-        Students = new() {
-        new() {Name = "Mert2", Age = 12},
-        new() {Name = "Mert3", Age = 11}
-        }
-    };
+    //var teacher = new Teacher()
+    //{
+    //    Name = "Teacher of Mert",
+    //    Students = new() {
+    //    new() {Name = "Mert2", Age = 12},
+    //    new() {Name = "Mert3", Age = 11}
+    //    }
+    //};
 
+    var teacher = _context.Teachers.First(x => x.Name == "Teacher of Mert");
+    teacher.Students.Add(new() { Name = "Kutlu", Age = 25});
 
-    _context.Add(teacher);
     _context.SaveChanges();
 
     Console.WriteLine("Saved");
