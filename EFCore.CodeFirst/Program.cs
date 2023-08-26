@@ -24,7 +24,26 @@ using (var _context = new AppDbContext())
 
     //var productFeature = _context.productFeatures.Include(x => x.Product).ThenInclude(x => x.Category).First();
 
-    var product = _context.Products.Include(x => x.ProductFeature).Include(x => x.Category).First();
+    //var product = _context.Products.Include(x => x.ProductFeature).Include(x => x.Category).First();
+
+
+    var category = _context.Categories.First();
+
+    if (true)
+    {
+        _context.Entry(category).Collection(r => r.Products).Load();
+        category.Products.ForEach(r =>
+        {
+            Console.WriteLine(r.Name);
+        });
+    }
+
+    var product = _context.Products.First();
+    if (true)
+    {
+        _context.Entry(product).Reference(t => t.ProductFeature).Load();
+    }
+
 
     Console.WriteLine("Saved");
 }
