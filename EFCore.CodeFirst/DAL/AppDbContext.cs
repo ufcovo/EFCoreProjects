@@ -40,10 +40,10 @@ namespace EFCore.CodeFirst.DAL
             //        .HasConstraintName("FK_TeacherId"),
             //        x => x.HasOne<Student>().WithMany().HasForeignKey("Student_Id")
             //        .HasConstraintName("FK_StudentID")
-            //    );
+            //    ); 
 
             modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(
-                x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.Restrict);
+                x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.SetNull);
 
 
             
