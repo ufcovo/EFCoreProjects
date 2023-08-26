@@ -43,7 +43,7 @@ namespace EFCore.CodeFirst.DAL
             //    );
 
             modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(
-                x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.Cascade);
+                x => x.CategoryId).OnDelete(deleteBehavior: DeleteBehavior.Restrict);
 
 
             

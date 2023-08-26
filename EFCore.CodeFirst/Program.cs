@@ -17,8 +17,10 @@ using (var _context = new AppDbContext())
     //};
 
     //_context.Add(category);
-    
+
     var category = _context.Categories.First();
+    var products = _context.Products.Where(x => x.CategoryId == category.Id).ToList();
+    _context.Products.RemoveRange(products);
     _context.Categories.Remove(category);
     _context.SaveChanges();
 
