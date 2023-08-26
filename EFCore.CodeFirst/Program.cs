@@ -6,23 +6,23 @@ Initializer.Build();
 
 using (var _context = new AppDbContext())
 {
-    //var student = new Student() { Name = "Mert", Age = 25 };
-    //student.Teachers.Add(new() { Name = "Teacher of Halim"});
-    //student.Teachers.Add(new() { Name = "Teacher of Ahmet" });
-
-    //var teacher = new Teacher()
+    //var category = new Category()
     //{
-    //    Name = "Teacher of Mert",
-    //    Students = new() {
-    //    new() {Name = "Mert2", Age = 12},
-    //    new() {Name = "Mert3", Age = 11}
+    //    Name = "Pencils",
+    //    Products = new List<Product>()
+    //    {
+    //        new() {Name = "Pencil1" , Price = 100, Stock = 200, Barcode = 123},
+    //        new() {Name = "Pencil2" , Price = 200, Stock = 100, Barcode = 124}
     //    }
     //};
 
-    var teacher = _context.Teachers.First(x => x.Name == "Teacher of Mert");
-    teacher.Students.Add(new() { Name = "Kutlu", Age = 25});
-
+    //_context.Add(category);
+    
+    var category = _context.Categories.First();
+    _context.Categories.Remove(category);
     _context.SaveChanges();
+
+
 
     Console.WriteLine("Saved");
 }

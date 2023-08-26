@@ -69,29 +69,6 @@ namespace EFCore.CodeFirst.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductFeature");
-                });
-
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -155,17 +132,6 @@ namespace EFCore.CodeFirst.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature", b =>
-                {
-                    b.HasOne("EFCore.CodeFirst.DAL.Product", "Product")
-                        .WithOne("ProductFeature")
-                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("StudentTeacher", b =>
                 {
                     b.HasOne("EFCore.CodeFirst.DAL.Student", null)
@@ -184,12 +150,6 @@ namespace EFCore.CodeFirst.Migrations
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("EFCore.CodeFirst.DAL.Product", b =>
-                {
-                    b.Navigation("ProductFeature")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
