@@ -11,8 +11,11 @@ namespace EFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Manager> Manager { get; set; }
-        public DbSet<Employee> Employee { get; set; }
+        public DbSet<Product> Products{ get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductFeature> productFeatures { get; set; }
+        public DbSet<ProductFull> ProductFulls { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,20 +26,8 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // [Owned] attributed yerine fluent api ile yaparsak aşağıdaki gibi
-            modelBuilder.Entity<Manager>().OwnsOne(x => x.Person, p =>
-            {
-                p.Property(x => x.FirstName).HasColumnName("FirstName");
-                p.Property(x => x.LastName).HasColumnName("LastName");
-                p.Property(x => x.Age).HasColumnName("Age");
-            });
-            modelBuilder.Entity<Employee>().OwnsOne(x => x.Person, p =>
-            {
-                p.Property(x => x.FirstName).HasColumnName("FirstName");
-                p.Property(x => x.LastName).HasColumnName("LastName");
-                p.Property(x => x.Age).HasColumnName("Age");
-            });
 
+            modelBuilder.Entity<ProductFull>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
     }
