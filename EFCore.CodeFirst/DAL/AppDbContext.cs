@@ -12,10 +12,9 @@ namespace EFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products{ get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductFeature> productFeatures { get; set; }
-        public DbSet<ProductFull> ProductFulls { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        //public DbSet<ProductFeature> productFeatures { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -26,8 +25,9 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<ProductFull>().HasNoKey();
+            modelBuilder.Entity<Product>().Ignore(r => r.Barcode);
+            modelBuilder.Entity<Product>().Property(r => r.Name).IsUnicode(false);
+            modelBuilder.Entity<Product>().Property(r => r.Url).HasColumnType("varchar(500)").HasColumnName("ProductUrl");
             base.OnModelCreating(modelBuilder);
         }
     }
