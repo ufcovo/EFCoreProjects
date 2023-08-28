@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 namespace EFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
-    { 
-        public DbSet<Product> Products{ get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductFeature> productFeatures { get; set; }
+    {
+        //public DbSet<Product> Products{ get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        //public DbSet<ProductFeature> productFeatures { get; set; }
+        public DbSet<Person> People { get; set; }
 
 
 
@@ -25,13 +26,6 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().HasIndex(r => r.Name);
-            modelBuilder.Entity<Product>().HasIndex(r => r.Price);
-
-            modelBuilder.Entity<Product>().HasCheckConstraint("PriceDiscountCheck","[Price] > [Discount]");
-
-            //modelBuilder.Entity<Product>().HasIndex(r => r.Price).IncludeProperties(r => new { r.Name, r.Url });
-            //modelBuilder.Entity<Product>().HasIndex(r => new { r.Price, r.Url });
             base.OnModelCreating(modelBuilder);
         }
     }
