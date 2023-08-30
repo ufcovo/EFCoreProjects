@@ -16,58 +16,27 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges();
 
 
-    // Join of two table
-    var result = _context.Categories.Join(_context.Products, r => r.Id, x => x.CategoryId, (c, p) => new
-    {
-        CategoryName = c.Name,
-        ProductName = p.Name,
-        ProductPrice = p.Price
-    }).ToList();
+    var resultLeftJoin = await (from p in _context.Products
+                                join pf in _context.ProductFeatures on p.Id equals pf.Id into pfList
+                                from pf in pfList.DefaultIfEmpty()
+                                select new
+                                {
+                                    ProductName = p.Name,
+                                    Color = pf.Color,
+                                    Width = (int?)pf.Width
+                                }).ToListAsync();
 
-    var resultProduct = _context.Categories.Join(_context.Products, r => r.Id, x => x.CategoryId, (c, p) => p).ToList();
-    var resultCategory = _context.Categories.Join(_context.Products, r => r.Id, x => x.CategoryId, (c, p) => c).ToList();
+    var resultRightJoin = await (from pf in _context.ProductFeatures
+                                 join p in _context.Products on pf.Id equals p.Id into pList
+                                 from p in pList.DefaultIfEmpty()
+                                 select new
+                                 {
+                                     ProductName = p.Name,
+                                     ProductPrice = (decimal?)p.Price,
+                                     Color = pf.Color,
+                                     Width = (int?)pf.Width
+                                 }).ToListAsync();
 
-    var result2 = (from c in _context.Categories
-                   join p in _context.Products on c.Id equals p.CategoryId
-                   select new
-                   {
-                       CategoryName = c.Name,
-                       ProductName = p.Name,
-                       ProductPrice = p.Price
-                   }).ToList();
-
-    var result2Product = (from c in _context.Categories
-                          join p in _context.Products on c.Id equals p.CategoryId
-                          select p).ToList();
-
-
-    // Join of three table
-
-    var result3 = _context.Categories
-        .Join(_context.Products, r => r.Id, x => x.CategoryId, (c, p) => new { c, p })
-        .Join(_context.ProductFeatures, x => x.p.Id, y => y.Id, (c, pf) => new
-        {
-            CategoryName = c.c.Name,
-            ProductName = c.p.Name,
-            ProductPrice = c.p.Price,
-            ProductColor = pf.Color
-        }).ToList();
-
-    var result4 = (from c in _context.Categories
-                   join p in _context.Products on c.Id equals p.CategoryId
-                   join pf in _context.ProductFeatures on p.Id equals pf.Id
-                   select new
-                   {
-                       CategoryName = c.Name,
-                       ProductName = p.Name,
-                       ProductPrice = p.Price,
-                       ProductColor = pf.Color
-                   }).ToList();
-
-    var result5 = (from c in _context.Categories
-                   join p in _context.Products on c.Id equals p.CategoryId
-                   join pf in _context.ProductFeatures on p.Id equals pf.Id
-                   select new { c, p, pf }).ToList();
 
     Console.WriteLine("");
 }
