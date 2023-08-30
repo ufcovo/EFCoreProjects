@@ -15,16 +15,9 @@ using (var _context = new AppDbContext())
     //_context.Categories.Add(category);
     //_context.SaveChanges();
 
-    var products = await _context.Products.FromSqlRaw("select * from Products").ToListAsync();
+    var products = await _context.ProductEssentials.FromSqlRaw("select Name, Price from Products").ToListAsync();
 
-    var Id = 4;
-    var products2 = await _context.Products.FromSqlRaw("select * from Products where id={0}", Id).FirstAsync();
-
-    decimal price = 300;
-    var products3 = await _context.Products.FromSqlRaw("select * from Products where price > {0}", price).ToListAsync();
-
-
-    var products4 = await _context.Products.FromSqlInterpolated($"select * from Products where price > {price}").ToListAsync();
+    var productWithFeature = await _context.ProductWithFeatures.FromSqlRaw("select p.Id, p.Name, p.Price, pf.Color, pf.Height from Products p\r\ninner join ProductFeatures pf on p.Id = pf.Id").ToListAsync();
 
     Console.WriteLine("");
 }
