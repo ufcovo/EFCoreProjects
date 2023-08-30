@@ -21,7 +21,9 @@ namespace EFCore.CodeFirst.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build();
-            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).
+                UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"))
+                .UseQueryTrackingBehavior(queryTrackingBehavior: QueryTrackingBehavior.NoTracking);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

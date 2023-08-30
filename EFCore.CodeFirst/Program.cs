@@ -18,10 +18,11 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    var productsWithFeature = _context.Products.TagWith(@"Bu Query Ürünler ve 
-Ürünlere bağlı özellikleri getirir.").
-        Include(r => r.ProductFeature).Where(x => x.Price > 100).ToList();
-
+    var product = _context.Products.First(r => r.Id == 2);
+    product.Name = "Pencil 22";
+    _context.Update(product); // as no tracking kullanıldığı için bu gerekiyor
+    _context.Entry(product).State = EntityState.Modified; // veya bu
+    _context.SaveChanges();
 
     Console.WriteLine("");
 }
