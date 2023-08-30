@@ -19,6 +19,7 @@ namespace EFCore.CodeFirst.DAL
         public int Stock { get; set; }
         public int Barcode { get; set; }
         public int CategoryId { get; set; }
+        public bool isDeleted { get; set; }
         public virtual Category Category { get; set; }
         public virtual ProductFeature ProductFeature { get; set; }
     }

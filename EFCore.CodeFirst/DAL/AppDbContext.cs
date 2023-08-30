@@ -15,7 +15,6 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
-        public DbSet<ProductView> ProductViews { get; set; }
 
 
 
@@ -27,7 +26,8 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductView>().HasNoKey().ToView("productWithFeature");
+            modelBuilder.Entity<Product>().Property(r => r.isDeleted).HasDefaultValue(false);
+            modelBuilder.Entity<Product>().HasQueryFilter(r => !r.isDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }
