@@ -15,7 +15,7 @@ using (var _context = new AppDbContext())
     //_context.Categories.Add(category);
     //_context.SaveChanges();
 
-    var products = _context.ProductEssentials.Where(r => r.Price > 200).ToList();
+    var products = _context.ProductViews.ToList();
 
 
 
