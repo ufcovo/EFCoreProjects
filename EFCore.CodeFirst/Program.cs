@@ -15,36 +15,16 @@ using (var _context = new AppDbContext())
     //_context.Categories.Add(category);
     //_context.SaveChanges();
 
-    // Method syntax
-    //_context.Products.Join(_context.ProductFeatures)
+    var products = await _context.Products.FromSqlRaw("select * from Products").ToListAsync();
 
-    var leftResult = await (from p in _context.Products
-                            join pf in _context.ProductFeatures on p.Id equals pf.Id into pfList
-                            from pf in pfList.DefaultIfEmpty()
-                            select new
-                            {
-                                Id = p.Id,
-                                Name = p.Name,
-                                Color = pf.Color
-                            }).ToListAsync();
+    var Id = 4;
+    var products2 = await _context.Products.FromSqlRaw("select * from Products where id={0}", Id).FirstAsync();
 
-    // Query syntax
-    var rightResult = await (from pf in _context.ProductFeatures
-                             join p in _context.Products on pf.Id equals p.Id into pList
-                            from p in pList.DefaultIfEmpty()
-                            select new
-                            {
-                                Id = p.Id,
-                                Name = p.Name,
-                                Color = pf.Color
-                            }).ToListAsync();
+    decimal price = 300;
+    var products3 = await _context.Products.FromSqlRaw("select * from Products where price > {0}", price).ToListAsync();
 
-    var outerJoin = leftResult.Union(rightResult);
 
-    outerJoin.ToList().ForEach(x =>
-    {
-        
-    });
+    var products4 = await _context.Products.FromSqlInterpolated($"select * from Products where price > {price}").ToListAsync();
 
     Console.WriteLine("");
 }
