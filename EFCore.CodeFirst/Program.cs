@@ -15,9 +15,9 @@ using (var _context = new AppDbContext())
     //_context.Categories.Add(category);
     //_context.SaveChanges();
 
-    var products = await _context.ProductEssentials.FromSqlRaw("select Name, Price from Products").ToListAsync();
+    var products = _context.ProductEssentials.Where(r => r.Price > 200).ToList();
 
-    var productWithFeature = await _context.ProductWithFeatures.FromSqlRaw("select p.Id, p.Name, p.Price, pf.Color, pf.Height from Products p\r\ninner join ProductFeatures pf on p.Id = pf.Id").ToListAsync();
+
 
     Console.WriteLine("");
 }

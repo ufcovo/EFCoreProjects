@@ -16,7 +16,6 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductEssential> ProductEssentials { get; set; }
-        public DbSet<ProductWithFeature> ProductWithFeatures { get; set; }
 
 
 
@@ -28,8 +27,7 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductEssential>().HasNoKey();
-            modelBuilder.Entity<ProductWithFeature>().HasNoKey();
+            modelBuilder.Entity<ProductEssential>().HasNoKey().ToSqlQuery("select Name, Price from Products");
 
             base.OnModelCreating(modelBuilder);
         }
