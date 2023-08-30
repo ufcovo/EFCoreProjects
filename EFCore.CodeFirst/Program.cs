@@ -15,28 +15,36 @@ using (var _context = new AppDbContext())
     //_context.Categories.Add(category);
     //_context.SaveChanges();
 
+    // Method syntax
+    //_context.Products.Join(_context.ProductFeatures)
 
-    var resultLeftJoin = await (from p in _context.Products
-                                join pf in _context.ProductFeatures on p.Id equals pf.Id into pfList
-                                from pf in pfList.DefaultIfEmpty()
-                                select new
-                                {
-                                    ProductName = p.Name,
-                                    Color = pf.Color,
-                                    Width = (int?)pf.Width
-                                }).ToListAsync();
+    var leftResult = await (from p in _context.Products
+                            join pf in _context.ProductFeatures on p.Id equals pf.Id into pfList
+                            from pf in pfList.DefaultIfEmpty()
+                            select new
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Color = pf.Color
+                            }).ToListAsync();
 
-    var resultRightJoin = await (from pf in _context.ProductFeatures
-                                 join p in _context.Products on pf.Id equals p.Id into pList
-                                 from p in pList.DefaultIfEmpty()
-                                 select new
-                                 {
-                                     ProductName = p.Name,
-                                     ProductPrice = (decimal?)p.Price,
-                                     Color = pf.Color,
-                                     Width = (int?)pf.Width
-                                 }).ToListAsync();
+    // Query syntax
+    var rightResult = await (from pf in _context.ProductFeatures
+                             join p in _context.Products on pf.Id equals p.Id into pList
+                            from p in pList.DefaultIfEmpty()
+                            select new
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Color = pf.Color
+                            }).ToListAsync();
 
+    var outerJoin = leftResult.Union(rightResult);
+
+    outerJoin.ToList().ForEach(x =>
+    {
+        
+    });
 
     Console.WriteLine("");
 }
