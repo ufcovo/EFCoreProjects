@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 Initializer.Build();
 
-using (var _context = new AppDbContext(300))
+using (var _context = new AppDbContext())
 {
     #region DataInsert
     //var category = new Category() { Name = "Pencils" };
@@ -18,7 +18,8 @@ using (var _context = new AppDbContext(300))
     #endregion
 
 
-    var products = _context.Products.ToList();
+    var productsWithFeature = _context.Products.TagWith("Bu Query Ürünler ve Ürünlere bağlı özellikleri getirir.").
+        Include(r => r.ProductFeature).Where(x => x.Price > 100).ToList();
 
 
     Console.WriteLine("");
