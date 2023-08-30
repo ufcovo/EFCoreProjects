@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 Initializer.Build();
 
-using (var _context = new AppDbContext())
+using (var _context = new AppDbContext(300))
 {
     #region DataInsert
     //var category = new Category() { Name = "Pencils" };
@@ -20,7 +20,6 @@ using (var _context = new AppDbContext())
 
     var products = _context.Products.ToList();
 
-    var products2 = _context.Products.IgnoreQueryFilters().ToList();
 
     Console.WriteLine("");
 }

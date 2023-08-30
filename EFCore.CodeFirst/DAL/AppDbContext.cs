@@ -12,6 +12,16 @@ namespace EFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
+        private readonly int Barcode;
+
+        // private readonly ITenantService tenantService
+
+        public AppDbContext(int barcode)
+        {
+            Barcode = barcode;
+        }
+        public AppDbContext() { }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
@@ -27,7 +37,10 @@ namespace EFCore.CodeFirst.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().Property(r => r.isDeleted).HasDefaultValue(false);
-            modelBuilder.Entity<Product>().HasQueryFilter(r => !r.isDeleted);
+            if (Barcode != default(int))
+                modelBuilder.Entity<Product>().HasQueryFilter(r => !r.isDeleted && r.Barcode == Barcode);
+            else
+                modelBuilder.Entity<Product>().HasQueryFilter(r => !r.isDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }
