@@ -18,7 +18,8 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    var productsWithFeature = _context.Products.TagWith("Bu Query Ürünler ve Ürünlere bağlı özellikleri getirir.").
+    var productsWithFeature = _context.Products.TagWith(@"Bu Query Ürünler ve 
+Ürünlere bağlı özellikleri getirir.").
         Include(r => r.ProductFeature).Where(x => x.Price > 100).ToList();
 
 
