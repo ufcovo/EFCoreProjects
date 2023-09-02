@@ -1,4 +1,5 @@
-﻿using EFCore.CodeFirst;
+﻿using AutoMapper.QueryableExtensions;
+using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
 using EFCore.CodeFirst.DTOs;
 using EFCore.CodeFirst.Mappers;
@@ -35,7 +36,9 @@ using (var _context = new AppDbContext())
 
     var product = _context.Products.ToList();
 
-    var productDto = ObjectMapper.Mapper.Map<List<ProductDTO>>(product); 
+    //var productDto = ObjectMapper.Mapper.Map<List<ProductDTO>>(product);
+
+    var productDto = _context.Products.ProjectTo<ProductDTO>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
 
      Console.WriteLine();
 }
