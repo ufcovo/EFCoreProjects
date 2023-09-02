@@ -24,16 +24,19 @@ using (var _context = new AppDbContext())
 
 
 
-    // create function fc_product_full()
+    // create function fc_product_full_parameter(@categoryId int)
     // RETURNS TABLE
     // as
     // RETURN (
-    // select p.Id, p.Name, p.Price, c.Name 'CategoryName', pf.Width, pf.Height from Products as p
-    // join Categories as c on p.CategoryId = c.Id
-    // join ProductFeatures as pf on p.Id = pf.Id
+    // select p.Id, p.Name, pf.Width, pf.Height from Products as p
+    // left join ProductFeatures as pf on p.Id = pf.Id
+    // where p.CategoryId = @categoryId
     // )
+       
+    // select* from fc_product_full_parameter(1)
 
-    var products = _context.ProductFulls.ToList();
+    var categoryId = 1;
+    var products = _context.ProductWithFeatures.FromSqlInterpolated($"select * from fc_product_full_parameter({categoryId})").ToList();
 
     Console.WriteLine();
 }

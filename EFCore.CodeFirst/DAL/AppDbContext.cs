@@ -15,7 +15,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
-        public DbSet<ProductFull> ProductFulls { get; set; }
+        public DbSet<ProductWithFeature> ProductWithFeatures { get; set; }
 
 
 
@@ -29,7 +29,6 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductFull>().ToFunction("fc_product_full");
             base.OnModelCreating(modelBuilder);
         }
     }
