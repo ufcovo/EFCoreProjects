@@ -1,5 +1,6 @@
 ﻿using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
+using EFCore.CodeFirst.DTOs;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -23,18 +24,20 @@ using (var _context = new AppDbContext())
     #endregion
 
     // when use select, there is no need include
-    var products = await _context.Products.Select(x => new
+    var products = await _context.Products.Select(x => new ProductDTO
     {
         CategoryName = x.Category.Name,
         ProductName = x.Name,
         ProductPrice = x.Price,
         Width = (int?)x.ProductFeature.Width,
-    }).Where(r => r.ProductPrice > 100 && r.ProductName.StartsWith("P")).ToListAsync();
+    }).Where(r => r.ProductPrice > 100).ToListAsync();
 
-    var categories = await _context.Categories.Select(r => new
+
+
+    var categories = await _context.Categories.Select(r => new ProductDTO2
     {
         CategoryName = r.Name,
-        Products = String.Join(",", r.Products.Select(r => r.Name)),
+        ProductNames = String.Join(",", r.Products.Select(r => r.Name)),
         TotalPrice = r.Products.Sum(r => r.Price),
         TotalWidth = (int?)r.Products.Select(r => r.ProductFeature.Width).Sum()
     }).Where(r => r.TotalPrice > 100).OrderBy(r => r.TotalPrice).ToListAsync();
