@@ -31,12 +31,8 @@ using (var _context = new AppDbContext())
     // return (select count(*) from Products where CategoryId = @categoryId )
     // end
 
-    var count = _context.GetProductCount(1); // Not allowed
-    
-    var categories = await _context.Categories.Select(r => new { 
-        CategoryName = r.Name,
-        ProductCount = _context.GetProductCount(r.Id)
-    }).ToListAsync();
-    
+    int categoryId = 1;
+
+    var productCount = _context.productCounts.FromSqlInterpolated($"select dbo.fc_get_product_count({categoryId}) as Count").First().Count;
     Console.WriteLine();
 }
