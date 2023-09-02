@@ -1,6 +1,7 @@
 ﻿using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
 using EFCore.CodeFirst.DTOs;
+using EFCore.CodeFirst.Mappers;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -23,24 +24,18 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    // when use select, there is no need include
-    var products = await _context.Products.Select(x => new ProductDTO
-    {
-        CategoryName = x.Category.Name,
-        ProductName = x.Name,
-        ProductPrice = x.Price,
-        Width = (int?)x.ProductFeature.Width,
-    }).Where(r => r.ProductPrice > 100).ToListAsync();
+    //var productDto = _context.Products.Select(r => new ProductDTO()
+    //{
+    //    Id = r.Id,
+    //    Name = r.Name,
+    //    DiscountPrice = r.DiscountPrice,    
+    //    Price = r.Price,
+    //    Stock = r.Stock 
+    //}).ToList();
 
+    var product = _context.Products.ToList();
 
+    var productDto = ObjectMapper.Mapper.Map<List<ProductDTO>>(product); 
 
-    var categories = await _context.Categories.Select(r => new ProductDTO2
-    {
-        CategoryName = r.Name,
-        ProductNames = String.Join(",", r.Products.Select(r => r.Name)),
-        TotalPrice = r.Products.Sum(r => r.Price),
-        TotalWidth = (int?)r.Products.Select(r => r.ProductFeature.Width).Sum()
-    }).Where(r => r.TotalPrice > 100).OrderBy(r => r.TotalPrice).ToListAsync();
-
-    Console.WriteLine();
+     Console.WriteLine();
 }

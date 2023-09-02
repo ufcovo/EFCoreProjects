@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "eltgQgSl9M1/tfVgjMfwjdr036+z9gk2cT95ODT8onvED9ve4uwlVLwnB0dB+YocVTgAd6O+H7WMorn/eKzl2w==",
+  "dgSpecHash": "RD+lEEszgwLzlHzo8SrmCAQqxd+bbeNSgqUJNDcss54ao6Y8+dehmav4FAbVLVVjwXYhU87pJvWLHi3TUsvUNw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mertt\\source\\repos\\EFCoreProjects\\EFCore.CodeFirst\\EFCore.CodeFirst.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Mertt\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Mertt\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\Mertt\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Mertt\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Mertt\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Mertt\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Mertt\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Mertt\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.21\\microsoft.entityframeworkcore.6.0.21.nupkg.sha512",
