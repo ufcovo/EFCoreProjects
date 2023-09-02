@@ -15,7 +15,9 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
-        public DbSet<ProductWithFeature> ProductWithFeatures { get; set; }
+
+
+        public IQueryable<ProductWithFeature> GetProductWithFeatures(int categoryId) => FromExpression(() => GetProductWithFeatures(categoryId));
 
 
 
@@ -29,6 +31,7 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductWithFeatures), new[] { typeof(int)})!).HasName("fc_product_full_parameter");
             base.OnModelCreating(modelBuilder);
         }
     }

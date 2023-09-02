@@ -32,11 +32,11 @@ using (var _context = new AppDbContext())
     // left join ProductFeatures as pf on p.Id = pf.Id
     // where p.CategoryId = @categoryId
     // )
-       
+
     // select* from fc_product_full_parameter(1)
 
-    var categoryId = 1;
-    var products = _context.ProductWithFeatures.FromSqlInterpolated($"select * from fc_product_full_parameter({categoryId})").ToList();
-
+    int categoryId = 1;
+    var products = await _context.GetProductWithFeatures(categoryId).ToListAsync();
+    
     Console.WriteLine();
 }
