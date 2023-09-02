@@ -24,19 +24,19 @@ using (var _context = new AppDbContext())
 
 
 
-    // create function fc_product_full_parameter(@categoryId int)
-    // RETURNS TABLE
+    // create function fc_get_product_count(@categoryId int)
+    // RETURNS int
     // as
-    // RETURN (
-    // select p.Id, p.Name, pf.Width, pf.Height from Products as p
-    // left join ProductFeatures as pf on p.Id = pf.Id
-    // where p.CategoryId = @categoryId
-    // )
+    // begin
+    // return (select count(*) from Products where CategoryId = @categoryId )
+    // end
 
-    // select* from fc_product_full_parameter(1)
-
-    int categoryId = 1;
-    var products = await _context.GetProductWithFeatures(categoryId).ToListAsync();
+    var count = _context.GetProductCount(1); // Not allowed
+    
+    var categories = await _context.Categories.Select(r => new { 
+        CategoryName = r.Name,
+        ProductCount = _context.GetProductCount(r.Id)
+    }).ToListAsync();
     
     Console.WriteLine();
 }

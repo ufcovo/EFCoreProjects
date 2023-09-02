@@ -19,7 +19,10 @@ namespace EFCore.CodeFirst.DAL
 
         public IQueryable<ProductWithFeature> GetProductWithFeatures(int categoryId) => FromExpression(() => GetProductWithFeatures(categoryId));
 
-
+        public int GetProductCount(int categoryId)
+        {
+            throw new NotSupportedException("You cannot call this function directly from ef core.");
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +35,9 @@ namespace EFCore.CodeFirst.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductWithFeatures), new[] { typeof(int)})!).HasName("fc_product_full_parameter");
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductCount), new[] { typeof(int) })!).HasName("fc_get_product_count");
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
