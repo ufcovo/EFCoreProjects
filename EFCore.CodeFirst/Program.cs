@@ -18,14 +18,6 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    var product = _context.Products.First(r => r.Id == 2);
-    product.Name = "Pencil 22";
-    _context.Update(product); // as no tracking kullanıldığı için bu gerekiyor
-    _context.Entry(product).State = EntityState.Modified; // veya bu
-    _context.SaveChanges();
-
-    Console.WriteLine("");
+    var products = _context.Products.FromSqlRaw("exec sp_get_products").ToList();
+    Console.WriteLine();
 }
-
-
-
