@@ -23,81 +23,17 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    // create procedure sp_insert_products
-    // @name nvarchar(max),
-    // @price decimal(9, 2),
-    // @discount decimal(9, 2),
-    // @stock int,
-    // @barcode int,
-    //     @categoryId int,
-    //     @newId int output
 
+    // create function fc_product_full()
+    // RETURNS TABLE
     // as
-    //     begin
-    // insert into Products(Name, Price, DiscountPrice, Stock, Barcode, CategoryId)
-    // values
-    // (@name, @price, @discount, @stock, @barcode, @categoryId)
-    // set @newId = SCOPE_IDENTITY();
-    //     return @newId
-    // end
+    // RETURN (
+    // select p.Id, p.Name, p.Price, c.Name 'CategoryName', pf.Width, pf.Height from Products as p
+    // join Categories as c on p.CategoryId = c.Id
+    // join ProductFeatures as pf on p.Id = pf.Id
+    // )
 
-
-    // declare @newId int;
-    // exec sp_insert_products 'Pencil 1000', 1000, 1000, 1000, 1000, 1, @newId output
-    // select @newId
-
-    var product = new Product()
-    {
-        Name = "Pencil 2000",
-        Price = 2000,
-        DiscountPrice = 2000,
-        Stock = 2000,
-        Barcode = 2000,
-        CategoryId = 1
-    };
-
-    var newProductIdParameter = new SqlParameter("@newId", System.Data.SqlDbType.Int);
-    newProductIdParameter.Direction = System.Data.ParameterDirection.Output;
-
-    _context.Database.ExecuteSqlInterpolated($"exec sp_insert_products {product.Name}, {product.Price}, {product.DiscountPrice}, {product.Stock}, {product.Barcode}, {product.CategoryId}, {newProductIdParameter} out");
-
-    var newProductId = newProductIdParameter.Value;
-
-
-
-    // create procedure sp_insert_products_noReturn
-    // @name nvarchar(max),
-    // @price decimal(9, 2),
-    // @discount decimal(9, 2),
-    // @stock int,
-    // @barcode int,
-    // @categoryId int
-
-    // as
-    // begin
-    // insert into Products(Name, Price, DiscountPrice, Stock, Barcode, CategoryId)
-    // values
-    // (@name, @price, @discount, @stock, @barcode, @categoryId)
-
-    // end
-
-
-    // exec sp_insert_products_noReturn 'Pencil 2000', 2000, 2000, 2000, 2000, 1
-
-    var product2 = new Product()
-    {
-        Name = "Pencil 4000",
-        Price = 4000,
-        DiscountPrice = 4000,
-        Stock = 4000,
-        Barcode = 4000,
-        CategoryId = 1
-    };
-
-    _context.Database.ExecuteSqlInterpolated($"exec sp_insert_products_noReturn {product2.Name}, {product2.Price}, {product2.DiscountPrice}, {product2.Stock}, {product2.Barcode}, {product2.CategoryId}");
-
-
-
+    var products = _context.ProductFulls.ToList();
 
     Console.WriteLine();
 }

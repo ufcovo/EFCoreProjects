@@ -29,7 +29,7 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductFull>().HasNoKey();
+            modelBuilder.Entity<ProductFull>().ToFunction("fc_product_full");
             base.OnModelCreating(modelBuilder);
         }
     }
