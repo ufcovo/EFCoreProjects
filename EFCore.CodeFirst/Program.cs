@@ -22,7 +22,8 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    var products = await _context.Products.Include(r => r.Category).Include(r => r.ProductFeature).Select(x => new
+    // when use select, there is no need include
+    var products = await _context.Products.Select(x => new
     {
         CategoryName = x.Category.Name,
         ProductName = x.Name,
@@ -30,11 +31,12 @@ using (var _context = new AppDbContext())
         Width = (int?)x.ProductFeature.Width,
     }).Where(r => r.ProductPrice > 100 && r.ProductName.StartsWith("P")).ToListAsync();
 
-    var categories = await _context.Categories.Include(r => r.Products).ThenInclude(r => r.ProductFeature).Select(r => new
+    var categories = await _context.Categories.Select(r => new
     {
         CategoryName = r.Name,
         Products = String.Join(",", r.Products.Select(r => r.Name)),
-        TotalPrice = r.Products.Sum(r => r.Price)
+        TotalPrice = r.Products.Sum(r => r.Price),
+        TotalWidth = (int?)r.Products.Select(r => r.ProductFeature.Width).Sum()
     }).Where(r => r.TotalPrice > 100).OrderBy(r => r.TotalPrice).ToListAsync();
 
     Console.WriteLine();
