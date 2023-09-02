@@ -22,17 +22,7 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
+    var products = _context.Products.Include(r => r.Category).ToList();
 
-
-    // create function fc_get_product_count(@categoryId int)
-    // RETURNS int
-    // as
-    // begin
-    // return (select count(*) from Products where CategoryId = @categoryId )
-    // end
-
-    int categoryId = 1;
-
-    var productCount = _context.productCounts.FromSqlInterpolated($"select dbo.fc_get_product_count({categoryId}) as Count").First().Count;
     Console.WriteLine();
 }
