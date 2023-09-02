@@ -18,6 +18,17 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    var products = _context.Products.FromSqlRaw("exec sp_get_products").ToList();
+    // create procedure sp_get_products_full
+    // as
+    // begin
+    // select p.Id, p.Name, p.Price, c.Name 'CategoryName', pf.Width, pf.Height from Products as p
+    // join Categories as c on p.CategoryId = c.Id
+    // join ProductFeatures as pf on p.Id = pf.Id
+    // end
+
+
+    var products = _context.ProductFulls.FromSqlRaw("exec sp_get_products_full").ToList();
+    products = products.Where(p => p.Width > 100).ToList();
+
     Console.WriteLine();
 }

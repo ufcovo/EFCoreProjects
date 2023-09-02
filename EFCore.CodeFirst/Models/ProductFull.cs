@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.CodeFirst.DAL
+namespace EFCore.CodeFirst.Models
 {
-    //[Keyless]
     public class ProductFull
     {
-        public int Product_Id { get; set; }
-        public string CategoryName { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
+        public string CategoryName { get; set; }
         [Precision(18, 2)]
         public decimal Price { get; set; }
+        public int Width { get; set; }
         public int Height { get; set; }
 
     }
