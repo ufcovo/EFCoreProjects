@@ -14,8 +14,8 @@ namespace EFCore.CodeFirst.Models
         public string CategoryName { get; set; }
         [Precision(18, 2)]
         public decimal Price { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int? Width { get; set; }
+        public int? Height { get; set; }
 
     }
 }

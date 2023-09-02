@@ -1,6 +1,7 @@
 ﻿using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 Initializer.Build();
 
@@ -18,17 +19,22 @@ using (var _context = new AppDbContext())
     #endregion
 
 
-    // create procedure sp_get_products_full
+    // create procedure sp_get_products_full_parameters
+    // @caregoryId int,
+    // @price decimal(9, 2)
     // as
     // begin
-    // select p.Id, p.Name, p.Price, c.Name 'CategoryName', pf.Width, pf.Height from Products as p
-    // join Categories as c on p.CategoryId = c.Id
-    // join ProductFeatures as pf on p.Id = pf.Id
+    // select p.Id, p.Name, p.Price, c.Name 'CategoryName', pf.Width, pf.Height from Categories as c
+    // join Products as p on p.CategoryId = c.Id
+    // left join ProductFeatures as pf on p.Id = pf.Id
+    // where p.CategoryId = @caregoryId and p.Price > @price
     // end
 
+    var categoryId = 1;
+    decimal price = 100;
 
-    var products = _context.ProductFulls.FromSqlRaw("exec sp_get_products_full").ToList();
-    products = products.Where(p => p.Width > 100).ToList();
+    var products = _context.ProductFulls.FromSqlInterpolated($"exec sp_get_products_full_parameters {categoryId}, {price}").ToList();
+
 
     Console.WriteLine();
 }
