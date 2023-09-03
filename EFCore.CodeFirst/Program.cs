@@ -31,10 +31,10 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.Serializable))
     {
 
-        // SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+        // SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
         // BEGIN TRANSACTION MyTransaction
         // BEGIN TRY
         // SELECT* FROM Products
@@ -46,7 +46,7 @@ using (var _context = new AppDbContext())
         // PRINT 'Transaction is Fail'
         // END CATCH
 
-        var product = _context.Products.Take(2).ToList();
+        var product = _context.Products.ToList();
         //product.Price = 888;
         //_context.SaveChanges();
 
