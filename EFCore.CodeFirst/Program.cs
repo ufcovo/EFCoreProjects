@@ -17,11 +17,8 @@ using System.Xml.Linq;
 
 Initializer.Build();
 
-var connection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
 
-IDbContextTransaction transaction = null;
-
-using (var _context = new AppDbContext(connection))
+using (var _context = new AppDbContext())
 {
     #region DataInsert
     //var category = new Category() { Name = "Pencils" };
@@ -34,75 +31,14 @@ using (var _context = new AppDbContext(connection))
     //_context.SaveChanges(); 
     #endregion
 
-    using (transaction = _context.Database.BeginTransaction())
+    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadUncommitted))
     {
-        var category = new Category() { Name = "Cips" };
-        _context.Categories.Add(category);
+        var product = _context.Products.First();
+        product.Price = 888;
         _context.SaveChanges();
 
-        Product product = new()
-        {
-            Name = "Lays",
-            Price = 100,
-            Stock = 324,
-            Barcode = 111,
-            DiscountPrice = 1,
-            CategoryId = category.Id,
-        };
+        _context.Products.Add(new Product() { Name = "aa", Price = 1, Stock = 1, Barcode = 1, CategoryId = 1, DiscountPrice = 1});
 
-        _context.Products.Add(product);
-        _context.SaveChanges();
-        Console.WriteLine("using 1 Done");
-
-        using (var dbContext2 = new AppDbContext(connection))
-        {
-            dbContext2.Database.UseTransaction(transaction.GetDbTransaction());
-
-            var product3 = dbContext2.Products.First();
-            product3.Stock = 999;
-            dbContext2.SaveChanges();
-            Console.WriteLine("using 2 Done");
-        }
         transaction.Commit();
     }
 }
-
-
-
-
-
-
-var _context = new AppDbContext(connection);
-transaction = _context.Database.BeginTransaction();
-
-var category = new Category() { Name = "Cips" };
-_context.Categories.Add(category);
-_context.SaveChanges();
-
-Product product = new()
-{
-    Name = "Lays",
-    Price = 100,
-    Stock = 324,
-    Barcode = 111,
-    DiscountPrice = 1,
-    CategoryId = category.Id,
-};
-
-_context.Products.Add(product);
-_context.SaveChanges();
-Console.WriteLine("using 1 Done");
-
-var dbContext2 = new AppDbContext(connection);
-dbContext2.Database.UseTransaction(transaction.GetDbTransaction());
-
-var product3 = dbContext2.Products.First();
-product3.Stock = 999;
-dbContext2.SaveChanges();
-Console.WriteLine("using 2 Done");
-
-
-transaction.Commit();
-
-_context.Dispose();
-dbContext2.Dispose();

@@ -13,13 +13,6 @@ namespace EFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        private DbConnection _connection;
-
-        public AppDbContext(DbConnection connection)
-        {
-            _connection = connection;
-        }
-
         public AppDbContext()
         {
 
@@ -31,15 +24,9 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_connection == default(DbConnection))
-            {
-                Initializer.Build();
-                optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).
-                UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
-            }
-            else
-                optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).
-                    UseSqlServer(_connection);
+            Initializer.Build();
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).
+            UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
