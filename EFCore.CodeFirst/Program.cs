@@ -5,14 +5,23 @@ using EFCore.CodeFirst.DTOs;
 using EFCore.CodeFirst.Mappers;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Xml.Linq;
 
+
 Initializer.Build();
 
-using (var _context = new AppDbContext())
+var connection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
+
+IDbContextTransaction transaction = null;
+
+using (var _context = new AppDbContext(connection))
 {
     #region DataInsert
     //var category = new Category() { Name = "Pencils" };
@@ -25,17 +34,15 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    // Use the try catch block if there is log insertion. Otherwise, it is not necessary or if nothing special is done in the catch block.
-    // if there is catch blok, must use transaction.RollBack()
-    using (var transaction = _context.Database.BeginTransaction())
+    using (transaction = _context.Database.BeginTransaction())
     {
-        var category = new Category() { Name = "Games" };
+        var category = new Category() { Name = "Cips" };
         _context.Categories.Add(category);
         _context.SaveChanges();
 
         Product product = new()
         {
-            Name = "GOW",
+            Name = "Lays",
             Price = 100,
             Stock = 324,
             Barcode = 111,
@@ -45,12 +52,57 @@ using (var _context = new AppDbContext())
 
         _context.Products.Add(product);
         _context.SaveChanges();
+        Console.WriteLine("using 1 Done");
 
+        using (var dbContext2 = new AppDbContext(connection))
+        {
+            dbContext2.Database.UseTransaction(transaction.GetDbTransaction());
+
+            var product3 = dbContext2.Products.First();
+            product3.Stock = 999;
+            dbContext2.SaveChanges();
+            Console.WriteLine("using 2 Done");
+        }
         transaction.Commit();
-
-        Console.WriteLine("Done");
     }
-
-
-        
 }
+
+
+
+
+
+
+var _context = new AppDbContext(connection);
+transaction = _context.Database.BeginTransaction();
+
+var category = new Category() { Name = "Cips" };
+_context.Categories.Add(category);
+_context.SaveChanges();
+
+Product product = new()
+{
+    Name = "Lays",
+    Price = 100,
+    Stock = 324,
+    Barcode = 111,
+    DiscountPrice = 1,
+    CategoryId = category.Id,
+};
+
+_context.Products.Add(product);
+_context.SaveChanges();
+Console.WriteLine("using 1 Done");
+
+var dbContext2 = new AppDbContext(connection);
+dbContext2.Database.UseTransaction(transaction.GetDbTransaction());
+
+var product3 = dbContext2.Products.First();
+product3.Stock = 999;
+dbContext2.SaveChanges();
+Console.WriteLine("using 2 Done");
+
+
+transaction.Commit();
+
+_context.Dispose();
+dbContext2.Dispose();
