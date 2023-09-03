@@ -35,15 +35,14 @@ using (var _context = new AppDbContext())
     using (var transaction = _context.Database.BeginTransaction(IsolationLevel.Snapshot))
     {
 
-        // alter database EFCoreCodeFirstDB -- after database use db name
-        // set allow_snapshot_isolation on
+        //IsolationLevel      Dirty Read    Nonrepeatable Read     Phantom Read
 
-        var product = _context.Products.AsNoTracking().ToList();
+        //Read Uncommitted    Yes             Yes                     Yes     
+        //Read Committed      No              Yes                     Yes
+        //Repeteable Read     No              No                      Yes
+        //Serializable        No              No                      No
+        //Snapshot            No              No                      No
 
-        // Business code
 
-        var product2 = _context.Products.AsNoTracking().ToList();
-        
-        transaction.Commit();
     }
 }
