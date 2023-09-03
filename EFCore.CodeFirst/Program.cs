@@ -33,6 +33,19 @@ using (var _context = new AppDbContext())
 
     using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadUncommitted))
     {
+
+        // SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+        // BEGIN TRANSACTION MyTransaction
+        // BEGIN TRY
+        // SELECT* FROM Products
+        // COMMIT TRANSACTION My_Transaction
+        // PRINT 'Transaction is succes'
+        // END TRY
+        // BEGIN CATCH
+        // ROLLBACK TRANSACTION My_Transaction
+        // PRINT 'Transaction is Fail'
+        // END CATCH
+
         var product = _context.Products.First();
         product.Price = 888;
         _context.SaveChanges();
