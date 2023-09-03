@@ -31,10 +31,10 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadUncommitted))
+    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
     {
 
-        // SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+        // SET TRANSACTION ISOLATION LEVEL READ COMMITTED
         // BEGIN TRANSACTION MyTransaction
         // BEGIN TRY
         // SELECT* FROM Products
