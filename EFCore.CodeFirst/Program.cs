@@ -26,6 +26,7 @@ using (var _context = new AppDbContext())
     #endregion
 
     // Use the try catch block if there is log insertion. Otherwise, it is not necessary or if nothing special is done in the catch block.
+    // if there is catch blok, must use transaction.RollBack()
     using (var transaction = _context.Database.BeginTransaction())
     {
         var category = new Category() { Name = "Games" };
