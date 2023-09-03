@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 
 
@@ -31,27 +32,18 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.Serializable))
+    using (var transaction = _context.Database.BeginTransaction(IsolationLevel.Snapshot))
     {
 
-        // SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
-        // BEGIN TRANSACTION MyTransaction
-        // BEGIN TRY
-        // SELECT* FROM Products
-        // COMMIT TRANSACTION My_Transaction
-        // PRINT 'Transaction is succes'
-        // END TRY
-        // BEGIN CATCH
-        // ROLLBACK TRANSACTION My_Transaction
-        // PRINT 'Transaction is Fail'
-        // END CATCH
+        // alter database EFCoreCodeFirstDB -- after database use db name
+        // set allow_snapshot_isolation on
 
-        var product = _context.Products.ToList();
-        //product.Price = 888;
-        //_context.SaveChanges();
+        var product = _context.Products.AsNoTracking().ToList();
 
-        //_context.Products.Add(new Product() { Name = "aa", Price = 1, Stock = 1, Barcode = 1, CategoryId = 1, DiscountPrice = 1});
+        // Business code
 
+        var product2 = _context.Products.AsNoTracking().ToList();
+        
         transaction.Commit();
     }
 }
