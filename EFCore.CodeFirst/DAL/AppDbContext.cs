@@ -20,8 +20,7 @@ namespace EFCore.CodeFirst.DAL
         {
             Initializer.Build();
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).
-                UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"))
-                .UseQueryTrackingBehavior(queryTrackingBehavior: QueryTrackingBehavior.NoTracking);
+                UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -25,20 +25,15 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
-    //var productDto = _context.Products.Select(r => new ProductDTO()
-    //{
-    //    Id = r.Id,
-    //    Name = r.Name,
-    //    DiscountPrice = r.DiscountPrice,    
-    //    Price = r.Price,
-    //    Stock = r.Stock 
-    //}).ToList();
 
-    var product = _context.Products.ToList();
+    // When a single save changes is used, there is no need to take it into the transaction block. EF Core provides this.
+    var category = new Category() { Name = "Games"};
+    _context.Categories.Add(category);
 
-    //var productDto = ObjectMapper.Mapper.Map<List<ProductDTO>>(product);
+    var product = _context.Products.First();
+    product.CategoryId = 6;
 
-    var productDto = _context.Products.ProjectTo<ProductDTO>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
+    _context.SaveChanges();
 
-     Console.WriteLine();
+    Console.WriteLine();
 }
