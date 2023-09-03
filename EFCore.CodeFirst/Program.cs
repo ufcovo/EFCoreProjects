@@ -25,15 +25,31 @@ using (var _context = new AppDbContext())
     //_context.SaveChanges(); 
     #endregion
 
+    // Use the try catch block if there is log insertion. Otherwise, it is not necessary or if nothing special is done in the catch block.
+    using (var transaction = _context.Database.BeginTransaction())
+    {
+        var category = new Category() { Name = "Games" };
+        _context.Categories.Add(category);
+        _context.SaveChanges();
 
-    // When a single save changes is used, there is no need to take it into the transaction block. EF Core provides this.
-    var category = new Category() { Name = "Games"};
-    _context.Categories.Add(category);
+        Product product = new()
+        {
+            Name = "GOW",
+            Price = 100,
+            Stock = 324,
+            Barcode = 111,
+            DiscountPrice = 1,
+            CategoryId = category.Id,
+        };
 
-    var product = _context.Products.First();
-    product.CategoryId = 6;
+        _context.Products.Add(product);
+        _context.SaveChanges();
 
-    _context.SaveChanges();
+        transaction.Commit();
 
-    Console.WriteLine();
+        Console.WriteLine("Done");
+    }
+
+
+        
 }
